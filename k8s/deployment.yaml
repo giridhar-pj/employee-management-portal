@@ -1,0 +1,24 @@
+# Deployment = tells Kubernetes how many pods to run and which image to use
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-portal
+spec:
+  replicas: 2                     # run 2 copies (pods) of the app
+  selector:
+    matchLabels:
+      app: employee-portal
+  template:
+    metadata:
+      labels:
+        app: employee-portal      # label used by the Service to find these pods
+    spec:
+      containers:
+        - name: employee-portal
+          image: IMAGE_PLACEHOLDER   # Jenkins replaces this with the real image name
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "32Mi"
